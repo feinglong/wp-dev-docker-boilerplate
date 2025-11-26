@@ -1,25 +1,137 @@
 # WordPress Dev Boilerplate (Docker + WP-CLI)
 
-Environnement de développement WordPress prêt à l'emploi avec Docker, MySQL,
-Apache et WP-CLI. Idéal pour développer des thèmes et plugins, avec uniquement
-le dossier `wp-content` versionné dans Git.
+A ready-to-use WordPress development environment powered by **Docker**, **MySQL**, **Apache**, and **WP-CLI**.
+Perfect for developing custom **themes** and **plugins**, with only the `wp-content` folder versioned in Git.
 
-## 🧱 Stack technique
+---
+
+## 🧱 Tech Stack
 
 - Docker & Docker Compose
 - MySQL 8
-- WordPress (image officielle `wordpress:php8.2-apache`)
-- WP-CLI (image officielle `wordpress:cli-php8.2`)
-- macOS (mais fonctionne aussi sur Linux/Windows avec Docker)
+- WordPress (official image `wordpress:php8.2-apache`)
+- WP-CLI (official image `wordpress:cli-php8.2`)
+- macOS (also works on Linux/Windows with Docker)
 
-## 📁 Structure du projet
+---
 
-```text
+## 📁 Project Structure
+
+```
 wp-dev-docker-boilerplate/
 ├─ docker-compose.yml
-├─ .env                  # config base de données + WordPress (non versionné)
+├─ .env                  # Database + WordPress config (not versioned)
 ├─ bin/
-│  └─ wp-install.sh      # script d'installation automatique via WP-CLI
+│  └─ wp-install.sh      # Automatic WordPress install script via WP-CLI
 └─ wp-content/
-   ├─ themes/            # vos thèmes personnalisés
-   └─ plugins/           # vos plugins personnalisés
+   ├─ themes/            # Your custom themes
+   └─ plugins/           # Your custom plugins
+```
+
+---
+
+## 🐳 Useful Docker Commands
+
+### ▶️ Start the WordPress environment
+Starts all containers (MySQL, WordPress, WP-CLI) in the background:
+
+```bash
+docker-compose up -d
+```
+
+---
+
+### ⏹️ Stop all containers
+
+```bash
+docker-compose down
+```
+
+---
+
+### 🔁 Restart containers (without recreating them)
+
+```bash
+docker-compose restart
+```
+
+---
+
+### 📋 List running containers
+
+```bash
+docker-compose ps
+```
+
+---
+
+### 📄 View WordPress container logs
+
+```bash
+docker-compose logs -f wordpress
+```
+
+---
+
+### 🧹 Remove containers + network (keeps database volume)
+
+```bash
+docker-compose down
+```
+
+---
+
+### 🔥 Remove containers + volumes (⚠️ deletes the database)
+
+```bash
+docker-compose down -v
+```
+
+---
+
+### 🧪 Enter the WordPress container (Bash shell)
+
+```bash
+docker-compose exec wordpress bash
+```
+
+---
+
+### 🧪 Enter the WP-CLI container
+
+```bash
+docker-compose run --rm wpcli bash
+```
+
+---
+
+### 🚀 Install WordPress via WP-CLI
+
+```bash
+docker-compose run --rm wpcli bash bin/wp-install.sh
+```
+
+---
+
+## 🧼 Full Cleanup (reset WordPress without touching wp-content)
+
+Inside the WP-CLI container:
+
+```bash
+docker-compose run --rm wpcli bash
+```
+
+Then inside the shell:
+
+```bash
+rm -rf wp-admin wp-includes wp-*.php index.php license.txt readme.html xmlrpc.php
+exit
+```
+
+Reinstall WordPress:
+
+```bash
+docker-compose run --rm wpcli bash bin/wp-install.sh
+```
+
+---
