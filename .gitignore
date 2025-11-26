@@ -1,0 +1,17 @@
+# Docker volumes
+db_data/
+*.log
+
+# Node / build
+node_modules/
+dist/
+build/
+
+# Mac OS
+.DS_Store
+
+# Composer
+vendor/
+
+# Env
+.env
